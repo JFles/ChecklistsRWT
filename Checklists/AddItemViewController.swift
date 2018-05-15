@@ -15,6 +15,10 @@ class AddItemViewController: UITableViewController {
         navigationItem.largeTitleDisplayMode = .never
     }
     
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
     @IBAction func cancel() {
         navigationController?.popViewController(animated: true)
     }
