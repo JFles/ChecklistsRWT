@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Checklist View Controller-->
+        <!--Checklists-->
         <scene sceneID="mX9-7J-BSh">
             <objects>
                 <tableViewController id="65X-8o-hLY" customClass="ChecklistViewController" customModule="Checklists" customModuleProvider="target" sceneMemberID="viewController">
@@ -41,11 +41,17 @@
                             <outlet property="delegate" destination="65X-8o-hLY" id="Pgy-lh-s2o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="yYB-ox-WMO"/>
+                    <navigationItem key="navigationItem" title="Checklists" id="yYB-ox-WMO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="IZd-QU-SxA">
+                            <connections>
+                                <action selector="addItem" destination="65X-8o-hLY" id="dMh-gu-kip"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4B-Nu-wlD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020" y="1.056338028169014"/>
+            <point key="canvasLocation" x="821" y="1"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ghq-g7-TzP">

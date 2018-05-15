@@ -43,7 +43,7 @@ class ChecklistViewController: UITableViewController {
         
         // generating additional lines of data to expand test checklist
         //BUG: This puts pointers to the same object in the array repeat times
-        //      Creates an issue with the accessory toggling occurring on the same object in the array
+        //     Creates an issue with the accessory toggling occurring on the same object in the array
         //     Need to figure out how to create UNIQUE instances in the array
         //     or a deep copy of objects to append to the array
 //        let loopCount = Array(repeating: 0, count: 5)
@@ -56,7 +56,7 @@ class ChecklistViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,5 +115,24 @@ class ChecklistViewController: UITableViewController {
         } else {
             cell.accessoryType = .none
         }
+    }
+    
+    // right nav button - Add item to table view
+    @IBAction func addItem(){
+        // count starts at 1, so full count would be "current index + 1"
+        let newRowIndex = items.count
+        
+        let item = ChecklistItem()
+        item.text = "New row, new row!"
+        item.checked = false
+        items.append(item)
+        
+        //sets IndexPath row to next available array index at section 0
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        //sticks the resulting IndexPath in an array -- Why???
+        //Because the "InsertRow" method takes an array of IndexPaths as an argument?
+        let indexPaths = [indexPath]
+        //Finally, insert the new row
+        tableView.insertRows(at: indexPaths, with: .automatic)
     }
 }
