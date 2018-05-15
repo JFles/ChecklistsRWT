@@ -65,13 +65,11 @@ class ChecklistViewController: UITableViewController {
     }
     
     //returns how many rows to draw in table
-    override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
         //reference to each array item
@@ -86,10 +84,7 @@ class ChecklistViewController: UITableViewController {
     }
 
     //method handles behavior when row is tapped
-
-    
-    override func tableView(_ tableView: UITableView,
-                            didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             let item = items[indexPath.row]
             item.toggleChecked()
@@ -98,8 +93,16 @@ class ChecklistViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func configureText(for cell: UITableViewCell,
-                       with item: ChecklistItem) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        //remove from data model ('items' array)
+        items.remove(at: indexPath.row)
+        
+        //remove from the table view
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
         // tag is used here instead of an @IBOutlet since the element is reusable and has multiple instances
         let label = cell.viewWithTag(1000) as! UILabel
         
@@ -108,8 +111,7 @@ class ChecklistViewController: UITableViewController {
     }
     
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
-    func configureCheckmark(for cell: UITableViewCell,
-                            with item: ChecklistItem) {
+    func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
         if item.checked == true {
             cell.accessoryType = .checkmark
         } else {
