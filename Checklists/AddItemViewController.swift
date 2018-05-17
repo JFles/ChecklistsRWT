@@ -8,11 +8,19 @@
 
 import UIKit
 
-class AddItemViewController: UITableViewController {
-
+class AddItemViewController: UITableViewController, UITextFieldDelegate {
+    //outlet variable exposed at the class level
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        textField.becomeFirstResponder()
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -24,6 +32,26 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func done() {
+        // debug
+        print("Textfield is currently '\(textField.text!)'")
+        
         navigationController?.popViewController(animated: true)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let oldText = textField.text!
+        let stringRange = Range(range, in: oldText)!
+        let newText = oldText.replacingCharacters(in: stringRange, with: string)
+
+        // disables done bar if text field is empty -- enables if not empty
+        doneBarButton.isEnabled = !newText.isEmpty
+        
+        // can be replaced with the above snippet -- clever and concise!
+//        if newText.isEmpty {
+//            doneBarButton.isEnabled = false
+//        } else {
+//            doneBarButton.isEnabled = true
+//        }
+        return true
     }
 }
