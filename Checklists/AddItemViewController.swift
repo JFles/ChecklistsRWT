@@ -8,10 +8,19 @@
 
 import UIKit
 
+// setup to create delegate
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
+}
+
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
     //outlet variable exposed at the class level
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    
+    // delegate to allow the add item vc to return the field text to prior screen
+    weak var delegate: AddItemViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +37,22 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancel() {
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewControllerDidCancel(self)
+        
+//        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func done() {
-        // debug
-        print("Textfield is currently '\(textField.text!)'")
+        let item = ChecklistItem()
+        item.text = textField.text!
+        item.checked = false
         
-        navigationController?.popViewController(animated: true)
+        delegate?.addItemViewController(self, didFinishAdding: item)
+        
+        // debug
+//        print("Textfield is currently '\(textField.text!)'")
+//
+//        navigationController?.popViewController(animated: true)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
