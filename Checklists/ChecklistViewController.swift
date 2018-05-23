@@ -9,13 +9,6 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
-        navigationController?.popViewController(animated: true)
-    }
     
     //array of ChecklistItems
     var items = [ChecklistItem]()
@@ -134,22 +127,21 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         }
     }
     
-    // right nav button - Add item to table view
-    @IBAction func addItem(){
-        // count starts at 1, so full count would be "current index + 1"
+    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+        // get new final row index
         let newRowIndex = items.count
-        
-        let item = ChecklistItem()
-        item.text = "New row, new row!"
-        item.checked = false
+        // add to data source array
         items.append(item)
         
-        //sets IndexPath row to next available array index at section 0
+        // add new row to tableView
         let indexPath = IndexPath(row: newRowIndex, section: 0)
-        //sticks the resulting IndexPath in an array -- Why???
-        //Because the "InsertRow" method takes an array of IndexPaths as an argument?
         let indexPaths = [indexPath]
-        //Finally, insert the new row
         tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        navigationController?.popViewController(animated: true)
     }
 }
