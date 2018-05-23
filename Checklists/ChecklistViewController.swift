@@ -19,7 +19,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
         let row0item = ChecklistItem()
         row0item.text = "Walk the dog"
-        row0item.checked = false
+        row0item.checked = true
         items.append(row0item)
         
         let row1item = ChecklistItem()
@@ -64,6 +64,14 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         if segue.identifier == "AddItem" {
             let controller = segue.destination as! AddItemViewController
             controller.delegate = self
+        } else if segue.identifier == "EditItem" {
+            let controller = segue.destination as! AddItemViewController
+            controller.delegate = self
+            // edits the array item for the data source
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                controller.itemToEdit = items[indexPath.row]
+            }
+            
         }
     }
 
@@ -90,7 +98,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         
         return cell
     }
-
+    
     //method handles behavior when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
@@ -101,6 +109,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // swipe to delete delegate method
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         //remove from data model ('items' array)
         items.remove(at: indexPath.row)
@@ -120,11 +129,19 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
+        let label = cell.viewWithTag(1001) as! UILabel
+        
         if item.checked == true {
-            cell.accessoryType = .checkmark
+            label.text = "√"
         } else {
-            cell.accessoryType = .none
+            label.text = ""
         }
+        
+//        if item.checked == true {
+//            cell.accessoryType = .checkmark
+//        } else {
+//            cell.accessoryType = .none
+//        }
     }
     
     func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
