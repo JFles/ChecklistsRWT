@@ -18,27 +18,27 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
 //        items = [ChecklistItem]()
         
         let row0item = ChecklistItem()
-        row0item.text = "Walk the dog"
+        row0item.text = "Spectacles"
         row0item.checked = true
         items.append(row0item)
         
         let row1item = ChecklistItem()
-        row1item.text = "Brush my teeth"
+        row1item.text = "Test tickles"
         row1item.checked = false
         items.append(row1item)
         
         let row2item = ChecklistItem()
-        row2item.text = "Learn iOS development"
+        row2item.text = "Wallet"
         row2item.checked = false
         items.append(row2item)
         
         let row3item = ChecklistItem()
-        row3item.text = "Soccer practice"
+        row3item.text = "And watch"
         row3item.checked = false
         items.append(row3item)
         
         let row4item = ChecklistItem()
-        row4item.text = "Eat ice cream"
+        row4item.text = "Eat less probably"
         row4item.checked = false
         items.append(row4item)
         
@@ -136,12 +136,6 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         } else {
             label.text = ""
         }
-        
-//        if item.checked == true {
-//            cell.accessoryType = .checkmark
-//        } else {
-//            cell.accessoryType = .none
-//        }
     }
     
     func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
@@ -159,6 +153,19 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
+        // get index of itemToEdit in array of data source
+        if let index = items.index(of: item) {
+            // convert Int row into IndexPath
+            let indexPath = IndexPath(row: index, section: 0)
+            // conmsume indexpath to find correct cell to modify
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configureText(for: cell, with: item)
+            }
+        }
         navigationController?.popViewController(animated: true)
     }
 }

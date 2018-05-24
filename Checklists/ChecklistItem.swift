@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ChecklistItem {
+// inherited NSObject to add "equatable" properties to object
+class ChecklistItem: NSObject {
     var text = ""
     var checked = false
     
