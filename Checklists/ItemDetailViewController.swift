@@ -1,5 +1,5 @@
 //
-//  AddItemViewController.swift
+//  ItemDetailViewController.swift
 //  Checklists
 //
 //  Created by Jeremy Fleshman on 5/15/18.
@@ -9,13 +9,13 @@
 import UIKit
 
 // setup to create delegate
-protocol AddItemViewControllerDelegate: class {
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController)
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem)
-    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem)
+protocol ItemDetailViewControllerDelegate: class {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem)
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem)
 }
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     //outlet variable exposed at the class level
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
@@ -23,7 +23,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     var itemToEdit: ChecklistItem?
     
     // delegate to allow the add item vc to return the field text to prior screen
-    weak var delegate: AddItemViewControllerDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +48,7 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancel() {
-        delegate?.addItemViewControllerDidCancel(self)
+        delegate?.itemDetailViewControllerDidCancel(self)
         
 //        navigationController?.popViewController(animated: true)
     }
@@ -56,12 +56,12 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func done() {
         if let itemToEdit = itemToEdit {
             itemToEdit.text = textField.text!
-            delegate?.addItemViewController(self, didFinishEditing: itemToEdit)
+            delegate?.itemDetailViewController(self, didFinishEditing: itemToEdit)
         } else {
             let item = ChecklistItem()
             item.text = textField.text!
             item.checked = false
-            delegate?.addItemViewController(self, didFinishAdding: item)
+            delegate?.itemDetailViewController(self, didFinishAdding: item)
         }
         // debug
 //        print("Textfield is currently '\(textField.text!)'")

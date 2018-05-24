@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     //array of ChecklistItems
     var items = [ChecklistItem]()
@@ -62,10 +62,10 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem" {
-            let controller = segue.destination as! AddItemViewController
+            let controller = segue.destination as! ItemDetailViewController
             controller.delegate = self
         } else if segue.identifier == "EditItem" {
-            let controller = segue.destination as! AddItemViewController
+            let controller = segue.destination as! ItemDetailViewController
             controller.delegate = self
             // edits the array item for the data source
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
@@ -138,11 +138,11 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         }
     }
     
-    func addItemViewControllerDidCancel(_ controller: AddItemViewController) {
+    func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishAdding item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         // get new final row index
         let newRowIndex = items.count
         // add to data source array
@@ -156,7 +156,7 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
         navigationController?.popViewController(animated: true)
     }
     
-    func addItemViewController(_ controller: AddItemViewController, didFinishEditing item: ChecklistItem) {
+    func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
         // get index of itemToEdit in array of data source
         if let index = items.index(of: item) {
             // convert Int row into IndexPath
