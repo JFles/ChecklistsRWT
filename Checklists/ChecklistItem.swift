@@ -9,7 +9,8 @@
 import Foundation
 
 // inherited NSObject to add "equatable" properties to object
-class ChecklistItem: NSObject {
+// inherited Codable to allow encode/decode (serialization) for saving
+class ChecklistItem: NSObject, Codable {
     var text = ""
     var checked = false
     

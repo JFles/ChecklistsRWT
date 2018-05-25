@@ -13,9 +13,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     //array of ChecklistItems
     var items = [ChecklistItem]()
     
+    /*
+    // With data persistence enabled, static initial data on view load is no longer needed
+    // **** May be deleted ****
     //still hardcoded values in object init
     required init?(coder aDecoder: NSCoder) {
-//        items = [ChecklistItem]()
+        //items = [ChecklistItem]()
         
         let row0item = ChecklistItem()
         row0item.text = "Spectacles"
@@ -53,11 +56,19 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 //        }
         
         super.init(coder: aDecoder)
+        
+        //debug to check if data persistence locations are working
+        print("Document folder is \(documentsDirectory())")
+        print("Data file path is \(dataFilePath())")
     }
+    */
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        //loading the plist of saved 'items' array for data persistence
+        loadChecklistItems()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -107,6 +118,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+        saveChecklistItems()
     }
     
     // swipe to delete delegate method
@@ -117,6 +129,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         //remove from the table view
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
+        saveChecklistItems()
     }
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -154,6 +167,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.insertRows(at: indexPaths, with: .automatic)
         
         navigationController?.popViewController(animated: true)
+        saveChecklistItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
@@ -167,5 +181,51 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             }
         }
         navigationController?.popViewController(animated: true)
+        saveChecklistItems()
+    }
+    
+    //book suggested their own helper method for getting the doc dir of the app since none is provided
+    func documentsDirectory() -> URL {
+        //returns the path for the users document folder
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        //return first and only el of the arr
+        return paths[0]
+    }
+    
+    //method to chain on 'documentsDirectory()' to grab the right file path for saving
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+    
+    // encode obj array and save items to documents folder in a plist
+    func saveChecklistItems() {
+        // create the encoder - list format
+        let encoder = PropertyListEncoder()
+        // do-catch try block - encode items array into file list and write to file
+        do {
+            //encode data
+            let data = try encoder.encode(items)
+            //write data to plist file
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+        } catch {
+            print("Error encoding item array!")
+        }
+    }
+    
+    //adding a func to load the plist array
+    func loadChecklistItems() {
+        // set path for plist
+        let path = dataFilePath()
+        //if guard to get the data at the path
+        if let data = try? Data(contentsOf: path) {
+            // create decoder
+            let decoder = PropertyListDecoder()
+            do {
+                // decode items to populate the 'items' array
+                items = try decoder.decode([ChecklistItem].self, from: data)
+            } catch {
+                print("Error decoding item array!")
+            }
+        }
     }
 }
