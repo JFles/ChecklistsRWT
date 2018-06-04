@@ -12,60 +12,11 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     //array of ChecklistItems
     var items = [ChecklistItem]()
-    
-    /*
-    // With data persistence enabled, static initial data on view load is no longer needed
-    // **** May be deleted ****
-    //still hardcoded values in object init
-    required init?(coder aDecoder: NSCoder) {
-        //items = [ChecklistItem]()
-        
-        let row0item = ChecklistItem()
-        row0item.text = "Spectacles"
-        row0item.checked = true
-        items.append(row0item)
-        
-        let row1item = ChecklistItem()
-        row1item.text = "Test tickles"
-        row1item.checked = false
-        items.append(row1item)
-        
-        let row2item = ChecklistItem()
-        row2item.text = "Wallet"
-        row2item.checked = false
-        items.append(row2item)
-        
-        let row3item = ChecklistItem()
-        row3item.text = "And watch"
-        row3item.checked = false
-        items.append(row3item)
-        
-        let row4item = ChecklistItem()
-        row4item.text = "Eat less probably"
-        row4item.checked = false
-        items.append(row4item)
-        
-        // generating additional lines of data to expand test checklist
-        //BUG: This puts pointers to the same object in the array repeat times
-        //     Creates an issue with the accessory toggling occurring on the same object in the array
-        //     Need to figure out how to create UNIQUE instances in the array
-        //     or a deep copy of objects to append to the array
-//        let loopCount = Array(repeating: 0, count: 5)
-//        for _ in loopCount {
-//            items.append(contentsOf: [row0item, row1item, row2item, row3item, row4item])
-//        }
-        
-        super.init(coder: aDecoder)
-        
-        //debug to check if data persistence locations are working
-        print("Document folder is \(documentsDirectory())")
-        print("Data file path is \(dataFilePath())")
-    }
-    */
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.largeTitleDisplayMode = .never
         
         //loading the plist of saved 'items' array for data persistence
         loadChecklistItems()
