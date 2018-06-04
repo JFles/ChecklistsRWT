@@ -13,6 +13,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     var items = [ChecklistItem]()
     
     // currently selected checklist (using to set nav title)
+    // will be nil until 'prepare(for:sender:)' executes for vc to receive obj -- so must be optional
     var checklist: Checklist!
 
     override func viewDidLoad() {

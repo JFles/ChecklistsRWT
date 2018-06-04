@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController {
+class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
     //initialized array to hold the checklists
     var lists = [Checklist]()
 
@@ -39,7 +39,6 @@ class AllListsViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return 3
         // replacing hard coded row count lists array count
@@ -68,6 +67,31 @@ class AllListsViewController: UITableViewController {
         return cell
     }
     
+    // delegate method to allow 'swipe-to-delete'
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        //remove the object from the data source array
+        lists.remove(at: indexPath.row)
+        //delete rows from the tableView
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
+    }
+    
+    //loading a view controller from code instead of an IB segue
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        //create controller
+        let controller = storyboard!.instantiateViewController(withIdentifier: "ListDetailViewController") as! ListDetailViewController
+        
+        //set delegate
+        controller.delegate = self
+        
+        // set the 'ChecklistToEdit' object
+        let checklist = lists[indexPath.row]
+        controller.checklistToEdit = checklist
+        
+        // push new VC to nav stack
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     // method allows parent VC to set up initial data for new VC before it renders
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // verify that the segue is from checklists to a specific checklist
@@ -76,6 +100,11 @@ class AllListsViewController: UITableViewController {
             let controller = segue.destination as! ChecklistViewController
             // finally, set the exposed 'checklist' var in the Checklist VC to the sender 'Checklist' object
             controller.checklist = sender as! Checklist
+        } else if segue.identifier == "AddChecklist" {
+            // set ListDetailViewController as the destination
+            let controller = segue.destination as! ListDetailViewController
+            // set self as delegate
+            controller.delegate = self
         }
     }
     
@@ -89,5 +118,42 @@ class AllListsViewController: UITableViewController {
         // returns a new recyclable cell
             return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
         }
+    }
+    
+    // MARK: - ListDetailViewDelegate Methods
+    func listDetailViewControllerDidCancel(_ controller: ListDetailViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
+        // create new index to use for updating tableView
+        let newRowIdex = lists.count
+        // append to array data source
+        lists.append(checklist)
+        
+        //create new indexpath obj
+        let indexPath = IndexPath(row: newRowIdex, section: 0)
+        //make const array with new indexpath
+        let indexPaths = [indexPath]
+        // add indexpath arr to tableview
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        //pop nav stack
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // TODO: - REVIEW HOW THIS WORKS
+    func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
+        // grab index of array item to edit
+        if let index = lists.index(of: checklist) {
+            // use index to ref the proper Index Path in the tableView
+            let indexPath = IndexPath(row: index, section: 0)
+            // grab cell to edit
+            if let cell = tableView.cellForRow(at: indexPath) {
+                // set cell text label the same as the checklist object
+                cell.textLabel!.text = checklist.name
+            }
+        }
+        navigationController?.popViewController(animated: true)
     }
 }

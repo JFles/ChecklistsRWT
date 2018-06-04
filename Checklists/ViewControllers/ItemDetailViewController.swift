@@ -29,10 +29,10 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
         
-        // loads the edit page instead
-        if let item = itemToEdit {
+        // loads the edit page instead -- uses "variable shadowing"? Might be the wrong term for this case
+        if let itemToEdit = itemToEdit {
             title = "Edit Item"
-            textField.text = item.text
+            textField.text = itemToEdit.text
             // should be able to submit the edited item without change -- better UX
             doneBarButton.isEnabled = true
         }
