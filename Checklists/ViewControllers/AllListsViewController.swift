@@ -31,8 +31,6 @@ class AllListsViewController: UITableViewController {
         
         list = Checklist(name: "Activities")
         lists.append(list)
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,16 +39,6 @@ class AllListsViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    
-    // TODO: CHECK THIS OUT! A TODO!
-    
-    // FIXME: - this is a FIXME
-    
-    /* removing numberOfSections(in:) ensures there will always be one section in the app */
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return 3
@@ -59,7 +47,10 @@ class AllListsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "ShowChecklist", sender: nil)
+        // store the current checklist object so that it can be passed to the Checklist View Controller
+        let checklist = lists[indexPath.row]
+        // manually segue to the checklist VC
+        performSegue(withIdentifier: "ShowChecklist", sender: checklist) // establishes the sender prop on 'self'
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,8 +65,18 @@ class AllListsViewController: UITableViewController {
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
         
-        
         return cell
+    }
+    
+    // method allows parent VC to set up initial data for new VC before it renders
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // verify that the segue is from checklists to a specific checklist
+        if segue.identifier == "ShowChecklist" {
+            // grab a reference to the destination segue and cast as the proper VC
+            let controller = segue.destination as! ChecklistViewController
+            // finally, set the exposed 'checklist' var in the Checklist VC to the sender 'Checklist' object
+            controller.checklist = sender as! Checklist
+        }
     }
     
     func makeCell(for tableView: UITableView) -> UITableViewCell {

@@ -9,14 +9,22 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
-    
     //array of ChecklistItems
     var items = [ChecklistItem]()
+    
+    // currently selected checklist (using to set nav title)
+    var checklist: Checklist!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // disables large title for the nav item since the parent controller has it enabled and the navItems
+        // will inherit the parent's preference for title display
         navigationItem.largeTitleDisplayMode = .never
+        
+        // setting the nav controller title to the current checklist's name
+        // is this safe? Found nil and crashed without proper segue -- will this never be nil when properly setup?
+        title = checklist.name
         
         //loading the plist of saved 'items' array for data persistence
         loadChecklistItems()
