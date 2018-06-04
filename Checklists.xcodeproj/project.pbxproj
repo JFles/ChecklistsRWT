@@ -63,8 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				605F027E20C5BAE600C837BD /* Classes */,
-				605F028020C5BB8400C837BD /* Core Files */,
 				605F027D20C5BADC00C837BD /* Delegates */,
+				605F028020C5BB8400C837BD /* Resources */,
 				605F027C20C5BACA00C837BD /* Storyboards */,
 				605F027B20C5BA4E00C837BD /* ViewControllers */,
 			);
@@ -107,13 +107,13 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		605F028020C5BB8400C837BD /* Core Files */ = {
+		605F028020C5BB8400C837BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				601BB18720A379BE003D0810 /* Assets.xcassets */,
 				601BB18C20A379BE003D0810 /* Info.plist */,
 			);
-			path = "Core Files";
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,7 +338,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3C9P7PTK6N;
-				INFOPLIST_FILE = Checklists/Info.plist;
+				INFOPLIST_FILE = Checklists/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,7 +356,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3C9P7PTK6N;
-				INFOPLIST_FILE = Checklists/Info.plist;
+				INFOPLIST_FILE = Checklists/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
