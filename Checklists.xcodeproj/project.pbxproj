@@ -62,18 +62,58 @@
 		601BB17F20A379BC003D0810 /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
-				601BB18720A379BE003D0810 /* Assets.xcassets */,
-				601BB18020A379BC003D0810 /* AppDelegate.swift */,
-				601BB18220A379BC003D0810 /* ChecklistViewController.swift */,
-				603DA88020AB73C000118E4D /* ItemDetailViewController.swift */,
-				601BB18420A379BC003D0810 /* Main.storyboard */,
-				601BB18920A379BE003D0810 /* LaunchScreen.storyboard */,
-				601BB18C20A379BE003D0810 /* Info.plist */,
-				601BB19220A5FE6C003D0810 /* ChecklistItem.swift */,
-				60F6418420C0CF09000FCCE3 /* AllListsViewController.swift */,
-				605F027920C595FD00C837BD /* Checklist.swift */,
+				605F027E20C5BAE600C837BD /* Classes */,
+				605F028020C5BB8400C837BD /* Core Files */,
+				605F027D20C5BADC00C837BD /* Delegates */,
+				605F027C20C5BACA00C837BD /* Storyboards */,
+				605F027B20C5BA4E00C837BD /* ViewControllers */,
 			);
 			path = Checklists;
+			sourceTree = "<group>";
+		};
+		605F027B20C5BA4E00C837BD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				60F6418420C0CF09000FCCE3 /* AllListsViewController.swift */,
+				603DA88020AB73C000118E4D /* ItemDetailViewController.swift */,
+				601BB18220A379BC003D0810 /* ChecklistViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		605F027C20C5BACA00C837BD /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				601BB18420A379BC003D0810 /* Main.storyboard */,
+				601BB18920A379BE003D0810 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		605F027D20C5BADC00C837BD /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				601BB18020A379BC003D0810 /* AppDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		605F027E20C5BAE600C837BD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				601BB19220A5FE6C003D0810 /* ChecklistItem.swift */,
+				605F027920C595FD00C837BD /* Checklist.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		605F028020C5BB8400C837BD /* Core Files */ = {
+			isa = PBXGroup;
+			children = (
+				601BB18720A379BE003D0810 /* Assets.xcassets */,
+				601BB18C20A379BE003D0810 /* Info.plist */,
+			);
+			path = "Core Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
