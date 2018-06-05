@@ -10,7 +10,7 @@ import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
     //array of ChecklistItems
-    var items = [ChecklistItem]()
+//    var items = [ChecklistItem]() // moving this to the checklist class to tie the data together
     
     // currently selected checklist (using to set nav title)
     // will be nil until 'prepare(for:sender:)' executes for vc to receive obj -- so must be optional
@@ -28,9 +28,10 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         title = checklist.name
         
         //loading the plist of saved 'items' array for data persistence
-        loadChecklistItems()
+//        loadChecklistItems()
     }
     
+    // utilizing prepare(for:sender:) for the delegate pattern
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItem" {
             let controller = segue.destination as! ItemDetailViewController
@@ -40,7 +41,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             controller.delegate = self
             // edits the array item for the data source
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                controller.itemToEdit = items[indexPath.row]
+                controller.itemToEdit = checklist.items[indexPath.row]
             }
             
         }
@@ -53,14 +54,15 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     //returns how many rows to draw in table
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return checklist.items.count
     }
     
+    //configures the cell for the tableview
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
         //reference to each array item
-        let item = items[indexPath.row]
+        let item = checklist.items[indexPath.row]
 
         //sets label text when drawing row to cell
         configureText(for: cell, with: item)
@@ -73,23 +75,23 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     //method handles behavior when row is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = items[indexPath.row]
+            let item = checklist.items[indexPath.row]
             item.toggleChecked()
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        saveChecklistItems()
+//        saveChecklistItems()
     }
     
     // swipe to delete delegate method
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         //remove from data model ('items' array)
-        items.remove(at: indexPath.row)
+        checklist.items.remove(at: indexPath.row)
         
         //remove from the table view
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
-        saveChecklistItems()
+//        saveChecklistItems()
     }
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -117,9 +119,9 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         // get new final row index
-        let newRowIndex = items.count
+        let newRowIndex = checklist.items.count
         // add to data source array
-        items.append(item)
+        checklist.items.append(item)
         
         // add new row to tableView
         let indexPath = IndexPath(row: newRowIndex, section: 0)
@@ -127,12 +129,12 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.insertRows(at: indexPaths, with: .automatic)
         
         navigationController?.popViewController(animated: true)
-        saveChecklistItems()
+//        saveChecklistItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
         // get index of itemToEdit in array of data source
-        if let index = items.index(of: item) {
+        if let index = checklist.items.index(of: item) {
             // convert Int row into IndexPath
             let indexPath = IndexPath(row: index, section: 0)
             // conmsume indexpath to find correct cell to modify
@@ -141,51 +143,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             }
         }
         navigationController?.popViewController(animated: true)
-        saveChecklistItems()
-    }
-    
-    //book suggested their own helper method for getting the doc dir of the app since none is provided
-    func documentsDirectory() -> URL {
-        //returns the path for the users document folder
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        //return first and only el of the arr
-        return paths[0]
-    }
-    
-    //method to chain on 'documentsDirectory()' to grab the right file path for saving
-    func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Checklists.plist")
-    }
-    
-    // encode obj array and save items to documents folder in a plist
-    func saveChecklistItems() {
-        // create the encoder - list format
-        let encoder = PropertyListEncoder()
-        // do-catch try block - encode items array into file list and write to file
-        do {
-            //encode data
-            let data = try encoder.encode(items)
-            //write data to plist file
-            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
-        } catch {
-            print("Error encoding item array!")
-        }
-    }
-    
-    //adding a func to load the plist array
-    func loadChecklistItems() {
-        // set path for plist
-        let path = dataFilePath()
-        //if guard to get the data at the path
-        if let data = try? Data(contentsOf: path) {
-            // create decoder
-            let decoder = PropertyListDecoder()
-            do {
-                // decode items to populate the 'items' array
-                items = try decoder.decode([ChecklistItem].self, from: data)
-            } catch {
-                print("Error decoding item array!")
-            }
-        }
+//        saveChecklistItems()
     }
 }

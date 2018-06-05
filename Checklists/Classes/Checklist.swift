@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Checklist: NSObject {
+class Checklist: NSObject, Codable {
     init(name: String) {
         self.name = name
         super.init()
@@ -16,4 +16,7 @@ class Checklist: NSObject {
     
     // will hold the name of the checklist
     var name = ""
+    
+    // nesting the checklist item array inside the checklist array
+    var items = [ChecklistItem]()
 }

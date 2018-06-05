@@ -19,18 +19,38 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         // and additional vcs in the stack should only set the 'navigationItem' prop
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        // setting test seed data for lists
-        var list = Checklist(name: "Clothing")
-        lists.append(list)
+        // using local data persistence w/ plist
+        loadChecklistItems()
         
-        list = Checklist(name: "Recipes")
-        lists.append(list)
-        
-        list = Checklist(name: "Dinners")
-        lists.append(list)
-        
-        list = Checklist(name: "Activities")
-        lists.append(list)
+//        // setting test seed data for lists
+//        // MARK: - Seed Test Data for lists
+//        var list = Checklist(name: "Clothing")
+//        lists.append(list)
+//
+//        list = Checklist(name: "Recipes")
+//        lists.append(list)
+//
+//        list = Checklist(name: "Dinners")
+//        lists.append(list)
+//
+//        list = Checklist(name: "Activities")
+//        lists.append(list)
+//
+//        // seeding each list with records
+//        //for each list in lists
+//        for list in lists {
+//            //create a while or repeat-while loop to generate multiple items per list
+//            var counter = 1
+//            while counter <= 10 {
+//                // create new checklist item object
+//                let item = ChecklistItem()
+//                // add text to the item
+//                item.text = "Item # \(counter) for \(list.name)"
+//                // append the item to the 'items' array in the checklist
+//                list.items.append(item)
+//                counter += 1
+//            }
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,5 +175,51 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             }
         }
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Data Persistence Functions
+    // helper method for getting the doc dir of the app since none is provided
+    func documentsDirectory() -> URL {
+        //returns the path for the users document folder
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        //return first and only el of the arr
+        return paths[0]
+    }
+
+    //method to chain on 'documentsDirectory()' to grab the right file path for saving
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent("Checklists.plist")
+    }
+
+    // encode obj array and save items to documents folder in a plist
+    func saveChecklistItems() {
+        // create the encoder - list format
+        let encoder = PropertyListEncoder()
+        // do-catch try block - encode items array into file list and write to file
+        do {
+            //encode data
+            let data = try encoder.encode(lists)
+            //write data to plist file
+            try data.write(to: dataFilePath(), options: Data.WritingOptions.atomic)
+        } catch {
+            print("Error encoding item array!")
+        }
+    }
+    
+    //adding a func to load the plist array
+    func loadChecklistItems() {
+        // set path for plist
+        let path = dataFilePath()
+        //if guard to get the data at the path
+        if let data = try? Data(contentsOf: path) {
+            // create decoder
+            let decoder = PropertyListDecoder()
+            do {
+                // decode items to populate the 'items' array
+                lists = try decoder.decode([Checklist].self, from: data)
+            } catch {
+                print("Error decoding item array!")
+            }
+        }
     }
 }
