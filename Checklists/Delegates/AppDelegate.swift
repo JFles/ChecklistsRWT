@@ -41,6 +41,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    // MARK: - Custom Delegate Functions
+    func saveData() {
+        //grab the nav controller -- Does it need to be active here?
+        let navigationController = window!.rootViewController as! UINavigationController
+        // grab the first VC on the nav controller stack -> all lists
+        let controller = navigationController.viewControllers[0] as! AllListsViewController
+        // call the save data function in the
+        controller.saveChecklistItems()
+    }
 
 }
 
