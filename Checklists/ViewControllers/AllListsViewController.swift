@@ -146,12 +146,12 @@ class AllListsViewController: UITableViewController,
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
         // create new index to use for updating tableView
-        let newRowIdex = dataModel.lists.count
+        let newRowIndex = dataModel.lists.count
         // append to array data source
         dataModel.lists.append(checklist)
         
         //create new indexpath obj
-        let indexPath = IndexPath(row: newRowIdex, section: 0)
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
         //make const array with new indexpath
         let indexPaths = [indexPath]
         // add indexpath arr to tableview

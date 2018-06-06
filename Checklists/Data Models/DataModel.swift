@@ -14,11 +14,16 @@ class DataModel {
     init(){
         loadChecklists()
         registerDefaults()
+        handleFirstTime()
     }
     
     // set "ChecklistIndex" to by -1 default to prevent app crash on new installs
     func registerDefaults() {
-        let dictionary = ["ChecklistIndex": -1]
+        let dictionary: [String : Any] = ["ChecklistIndex": -1,
+                                          "FirstTime": true]
+        
+        // userDefaults will use these values when it cannot find a value in the obj already
+        // In the case of "FirstTime"
         UserDefaults.standard.register(defaults: dictionary)
     }
     
@@ -29,6 +34,25 @@ class DataModel {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "ChecklistIndex")
+        }
+    }
+    
+    func handleFirstTime() {
+        // set const for userDef and firstTime val
+        let userDefaults = UserDefaults.standard
+        let firstTime = userDefaults.bool(forKey: "FirstTime")
+        
+        // if firstTime is true
+        if firstTime {
+            // create a default list
+            let checklist = Checklist(name: "List")
+            lists.append(checklist)
+            // add index to save spot if app terminates
+            indexOfSelectedChecklist = 0
+            // set firstTime UserDef to false
+            userDefaults.set(false, forKey: "FirstTime")
+            // call 'sync' function --> Why does this need to be done?
+            userDefaults.synchronize()
         }
     }
     

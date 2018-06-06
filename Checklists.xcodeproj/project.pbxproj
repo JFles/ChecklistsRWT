@@ -66,7 +66,7 @@
 		601BB17F20A379BC003D0810 /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
-				605F027E20C5BAE600C837BD /* Classes */,
+				605F027E20C5BAE600C837BD /* Data Models */,
 				605F027D20C5BADC00C837BD /* Delegates */,
 				605F028020C5BB8400C837BD /* Resources */,
 				605F027C20C5BACA00C837BD /* Storyboards */,
@@ -103,14 +103,14 @@
 			path = Delegates;
 			sourceTree = "<group>";
 		};
-		605F027E20C5BAE600C837BD /* Classes */ = {
+		605F027E20C5BAE600C837BD /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
 				6026F93520C75C4100767E5D /* DataModel.swift */,
 				605F027920C595FD00C837BD /* Checklist.swift */,
 				601BB19220A5FE6C003D0810 /* ChecklistItem.swift */,
 			);
-			path = Classes;
+			path = "Data Models";
 			sourceTree = "<group>";
 		};
 		605F028020C5BB8400C837BD /* Resources */ = {
