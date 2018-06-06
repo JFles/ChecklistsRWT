@@ -13,6 +13,23 @@ class DataModel {
     
     init(){
         loadChecklists()
+        registerDefaults()
+    }
+    
+    // set "ChecklistIndex" to by -1 default to prevent app crash on new installs
+    func registerDefaults() {
+        let dictionary = ["ChecklistIndex": -1]
+        UserDefaults.standard.register(defaults: dictionary)
+    }
+    
+    // getter/setter for obj prop
+    var indexOfSelectedChecklist: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "ChecklistIndex")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "ChecklistIndex")
+        }
     }
     
     // MARK: - Data Persistence Functions

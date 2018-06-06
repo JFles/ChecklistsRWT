@@ -8,9 +8,9 @@
 
 import UIKit
 
-class AllListsViewController: UITableViewController, ListDetailViewControllerDelegate {
-    //initialized array to hold the checklists
-//    var lists = [Checklist]()
+class AllListsViewController: UITableViewController,
+                              ListDetailViewControllerDelegate,
+                              UINavigationControllerDelegate {
     var dataModel: DataModel!
 
     override func viewDidLoad() {
@@ -26,6 +26,27 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         //DEBUG: output documents directory
 //        print(documentsDirectory())
     }
+    
+    //adding viewDidAppear() to handle saving last checklist viewed -- UX improvement
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //set the nav controller delegate to this VC
+        navigationController?.delegate = self
+        
+        //grab the stored index
+//        let index = UserDefaults.standard.integer(forKey: "ChecklistIndex")
+        let index = dataModel.indexOfSelectedChecklist
+        
+//        if index != -1 {
+        // made this a more robust check to resolve crash when UserDefaults became out of sync with dataModel
+        if index >= 0 && index < dataModel.lists.count {
+            // set appropriate checklist by index
+            let checklist = dataModel.lists[index]
+            // segue to correct checklist
+            performSegue(withIdentifier: "ShowChecklist", sender: checklist)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -40,6 +61,10 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //storing the row indexpath in user defaults to persist current viewed checklist if app terminates
+//        UserDefaults.standard.set(indexPath.row, forKey: "ChecklistIndex")
+        dataModel.indexOfSelectedChecklist = indexPath.row
+        
         // store the current checklist object so that it can be passed to the Checklist View Controller
         let checklist = dataModel.lists[indexPath.row]
         // manually segue to the checklist VC
@@ -149,5 +174,17 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             }
         }
         navigationController?.popViewController(animated: true)
+    }
+
+    //MARK: - UINavigationControllerDelegate methods
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        // checks if the back button is tapped
+        // sets the "remembered index" to an invalid value (UserDefaults does not support optionals)
+        // whenever the nav VC stack currently shows the initial view(AllListsVC VC)
+//        if navigationController.visibleViewController === self {
+        if viewController === self {
+//            UserDefaults.standard.set(-1, forKey: "ChecklistIndex")
+            dataModel.indexOfSelectedChecklist = -1
+        }
     }
 }
