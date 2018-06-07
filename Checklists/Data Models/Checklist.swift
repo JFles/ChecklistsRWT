@@ -19,4 +19,20 @@ class Checklist: NSObject, Codable {
     
     // nesting the checklist item array inside the checklist array
     var items = [ChecklistItem]()
+
+    // returns the number of remaining unchecked items
+    func countItems() -> Int {
+        /*
+        // original approach
+        var count = 0
+        for item in items where !item.checked {
+            count += 1
+        }
+        return count
+        */
+        //functional approach
+        return items.reduce(0) { count, item in count + (!item.checked ? 1 : 0) }
+    }
+    
+    
 }

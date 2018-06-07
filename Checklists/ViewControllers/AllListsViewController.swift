@@ -47,6 +47,13 @@ class AllListsViewController: UITableViewController,
             performSegue(withIdentifier: "ShowChecklist", sender: checklist)
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // reloading table view to update the "remaining" count
+        tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,11 +84,22 @@ class AllListsViewController: UITableViewController,
 //        cell.textLabel!.text = "List \(indexPath.row)"
         
         let cell = makeCell(for: tableView)
+        let countMessage: String
         
         // get checklist item from data source to configure cell
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
+        
+        //setting subtitle message for Checklist cells
+        if checklist.items.count == 0 {
+            countMessage = "(No Items)"
+        } else if checklist.countItems() == 0 {
+            countMessage = "All Done!"
+        } else {
+            countMessage = "\(checklist.countItems()) Remaining"
+        }
+        cell.detailTextLabel!.text = countMessage
         
         return cell
     }
@@ -135,7 +153,7 @@ class AllListsViewController: UITableViewController,
             return cell
         } else {
         // returns a new recyclable cell
-            return UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            return UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
         }
     }
     
