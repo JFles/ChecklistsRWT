@@ -56,6 +56,13 @@ class DataModel {
         }
     }
     
+    //sorting the checklists a-z ascending
+    func sortChecklists() {
+        lists.sort(by: { checklist1, checklist2 in
+            return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending
+        })
+    }
+    
     // MARK: - Data Persistence Functions
     // helper method for getting the doc dir of the app since none is provided
     func documentsDirectory() -> URL {
@@ -96,6 +103,8 @@ class DataModel {
             do {
                 // decode items to populate the 'items' array
                 lists = try decoder.decode([Checklist].self, from: data)
+                // sort the array alphabetically
+                sortChecklists()
             } catch {
                 print("Error decoding item array!")
             }

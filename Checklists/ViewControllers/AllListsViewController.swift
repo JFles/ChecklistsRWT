@@ -164,33 +164,41 @@ class AllListsViewController: UITableViewController,
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
         // create new index to use for updating tableView
-        let newRowIndex = dataModel.lists.count
+//        let newRowIndex = dataModel.lists.count
         // append to array data source
+//         dataModel.lists.append(checklist)
+//
+//        //create new indexpath obj
+//        let indexPath = IndexPath(row: newRowIndex, section: 0)
+//        //make const array with new indexpath
+//        let indexPaths = [indexPath]
+//        // add indexpath arr to tableview
+//        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        // updated algorithm with a reload to avoid manual updating
         dataModel.lists.append(checklist)
-        
-        //create new indexpath obj
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        //make const array with new indexpath
-        let indexPaths = [indexPath]
-        // add indexpath arr to tableview
-        tableView.insertRows(at: indexPaths, with: .automatic)
-        
-        //pop nav stack
+        dataModel.sortChecklists()
+        // replaced manually updating UI with a reload
+        // will call the delegates to recreate the cells from the data source again
+        tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }
     
     // TODO: - REVIEW HOW THIS WORKS
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-        // grab index of array item to edit
-        if let index = dataModel.lists.index(of: checklist) {
-            // use index to ref the proper Index Path in the tableView
-            let indexPath = IndexPath(row: index, section: 0)
-            // grab cell to edit
-            if let cell = tableView.cellForRow(at: indexPath) {
-                // set cell text label the same as the checklist object
-                cell.textLabel!.text = checklist.name
-            }
-        }
+//        // grab index of array item to edit
+//        if let index = dataModel.lists.index(of: checklist) {
+//            // use index to ref the proper Index Path in the tableView
+//            let indexPath = IndexPath(row: index, section: 0)
+//            // grab cell to edit
+//            if let cell = tableView.cellForRow(at: indexPath) {
+//                // set cell text label the same as the checklist object
+//                cell.textLabel!.text = checklist.name
+//            }
+//        }
+        dataModel.sortChecklists()
+        // reload replaces having to update in place -> less performant at scale?
+        tableView.reloadData()
         navigationController?.popViewController(animated: true)
     }
 
