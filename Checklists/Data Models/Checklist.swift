@@ -17,6 +17,9 @@ class Checklist: NSObject, Codable {
     // will hold the name of the checklist
     var name = ""
     
+    //holds the icon filename for the checklist -- Default is "Appointments" icon
+    var iconName = "No Icon"
+    
     // nesting the checklist item array inside the checklist array
     var items = [ChecklistItem]()
 

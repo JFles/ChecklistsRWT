@@ -24,6 +24,7 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     // expose: text field and done button
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var iconImageView: UIImageView!
     
     //add delegate reference for pattern
     weak var delegate:ListDetailViewControllerDelegate?
@@ -79,7 +80,12 @@ class ListDetailViewController: UITableViewController, UITextFieldDelegate {
     // MARK: - TableView Delegates
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // prevent user from highlighting cell on tap instewad of selecting textbox
-        return nil
+        // updated to allow user to access sect 1 ui image icons 
+        if indexPath.section == 1 {
+            return indexPath
+        } else {
+            return nil
+        }
     }
     
     // MARK: - UITextField Delegates

@@ -58,6 +58,7 @@ class DataModel {
     
     //sorting the checklists a-z ascending
     func sortChecklists() {
+        // sort is called with a closure -- an anonymous inline func
         lists.sort(by: { checklist1, checklist2 in
             return checklist1.name.localizedStandardCompare(checklist2.name) == .orderedAscending
         })

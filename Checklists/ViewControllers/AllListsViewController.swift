@@ -19,9 +19,6 @@ class AllListsViewController: UITableViewController,
         // seems this should only be set for the initial parent view
         // and additional vcs in the stack should only set the 'navigationItem' prop
         navigationController?.navigationBar.prefersLargeTitles = true
-
-        // using local data persistence w/ plist
-//        loadChecklistItems()
         
         //DEBUG: output documents directory
 //        print(documentsDirectory())
@@ -62,8 +59,6 @@ class AllListsViewController: UITableViewController,
 
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 3
-        // replacing hard coded row count lists array count
         return dataModel.lists.count
     }
 
@@ -78,11 +73,8 @@ class AllListsViewController: UITableViewController,
         performSegue(withIdentifier: "ShowChecklist", sender: checklist) // establishes the sender prop on 'self'
     }
     
+    // configuring cells to be drawn
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Creating prototype cell in code - not using IB!
-//        let cell = makeCell(for: tableView)
-//        cell.textLabel!.text = "List \(indexPath.row)"
-        
         let cell = makeCell(for: tableView)
         let countMessage: String
         
@@ -90,6 +82,8 @@ class AllListsViewController: UITableViewController,
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
+        // added an icon to the cell -- since it's a
+        cell.imageView!.image = UIImage(named: checklist.iconName)
         
         //setting subtitle message for Checklist cells
         if checklist.items.count == 0 {
@@ -163,18 +157,6 @@ class AllListsViewController: UITableViewController,
     }
     
     func listDetailViewController(_ controller: ListDetailViewController, didFinishAdding checklist: Checklist) {
-        // create new index to use for updating tableView
-//        let newRowIndex = dataModel.lists.count
-        // append to array data source
-//         dataModel.lists.append(checklist)
-//
-//        //create new indexpath obj
-//        let indexPath = IndexPath(row: newRowIndex, section: 0)
-//        //make const array with new indexpath
-//        let indexPaths = [indexPath]
-//        // add indexpath arr to tableview
-//        tableView.insertRows(at: indexPaths, with: .automatic)
-        
         // updated algorithm with a reload to avoid manual updating
         dataModel.lists.append(checklist)
         dataModel.sortChecklists()
@@ -186,16 +168,6 @@ class AllListsViewController: UITableViewController,
     
     // TODO: - REVIEW HOW THIS WORKS
     func listDetailViewController(_ controller: ListDetailViewController, didFinishEditing checklist: Checklist) {
-//        // grab index of array item to edit
-//        if let index = dataModel.lists.index(of: checklist) {
-//            // use index to ref the proper Index Path in the tableView
-//            let indexPath = IndexPath(row: index, section: 0)
-//            // grab cell to edit
-//            if let cell = tableView.cellForRow(at: indexPath) {
-//                // set cell text label the same as the checklist object
-//                cell.textLabel!.text = checklist.name
-//            }
-//        }
         dataModel.sortChecklists()
         // reload replaces having to update in place -> less performant at scale?
         tableView.reloadData()
