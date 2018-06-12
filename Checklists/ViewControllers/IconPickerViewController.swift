@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol IconPickerViewControllerDelegate: class {
-    func IconPicker(_ picker: IconPickerViewController, didPick iconName: String)
+    func iconPicker(_ picker: IconPickerViewController, didPick iconName: String)
 }
 
 class IconPickerViewController: UITableViewController {
@@ -25,15 +25,28 @@ class IconPickerViewController: UITableViewController {
         return icons.count
     }
     
+    // creates tableView with icon assets
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "IconCell", for: indexPath)
         
         let iconName = icons[indexPath.row]
 //        cell.imageView!.image = UIImage(named: iconName)
 //        cell.textLabel!.text = iconName
+        // trying these with optional instead of unwrapped to see what happens
         cell.imageView?.image = UIImage(named: iconName)
         cell.textLabel?.text = iconName
 
         return cell
+    }
+    
+    // sends iconName back to All List via icon Picker VC delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // check if the delegate is set -- guard nil crash
+        if let delegate = delegate {
+            // set icon name to the selected cell row icon name
+            let iconName = icons[indexPath.row]
+            // call delegate iconPicker(:didPick:) to pass VC and iconName
+            delegate.iconPicker(self, didPick: iconName)
+        }
     }
 }

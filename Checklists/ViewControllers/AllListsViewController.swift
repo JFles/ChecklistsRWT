@@ -82,7 +82,7 @@ class AllListsViewController: UITableViewController,
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .detailDisclosureButton
-        // added an icon to the cell -- since it's a
+        // added an icon to the cell -- since it's .subtitle style, it has an imageView built in to the left of the label
         cell.imageView!.image = UIImage(named: checklist.iconName)
         
         //setting subtitle message for Checklist cells
@@ -174,7 +174,7 @@ class AllListsViewController: UITableViewController,
         navigationController?.popViewController(animated: true)
     }
 
-    //MARK: - UINavigationControllerDelegate methods
+    // MARK: - UINavigationControllerDelegate methods
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         // checks if the back button is tapped
         // sets the "remembered index" to an invalid value (UserDefaults does not support optionals)
