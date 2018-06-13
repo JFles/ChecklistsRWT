@@ -306,4 +306,5 @@
         <segue reference="o8V-8a-d7K"/>
         <segue reference="BcB-Ke-sqj"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.015686274510000001" green="0.66274509800000003" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>

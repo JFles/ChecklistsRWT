@@ -100,6 +100,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
         let label = cell.viewWithTag(1001) as! UILabel
+        label.textColor = view.tintColor
         
         if item.checked == true {
             label.text = "√"
