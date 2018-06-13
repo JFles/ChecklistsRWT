@@ -26,9 +26,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         // setting the nav controller title to the current checklist's name
         // is this safe? Found nil and crashed without proper segue -- will this never be nil when properly setup?
         title = checklist.name
-        
-        //loading the plist of saved 'items' array for data persistence
-//        loadChecklistItems()
     }
     
     // utilizing prepare(for:sender:) for the delegate pattern
@@ -80,7 +77,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             configureCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-//        saveChecklistItems()
     }
     
     // swipe to delete delegate method
@@ -91,7 +87,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         //remove from the table view
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)
-//        saveChecklistItems()
     }
     
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
@@ -129,7 +124,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.insertRows(at: indexPaths, with: .automatic)
         
         navigationController?.popViewController(animated: true)
-//        saveChecklistItems()
     }
     
     func itemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
@@ -143,6 +137,5 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             }
         }
         navigationController?.popViewController(animated: true)
-//        saveChecklistItems()
     }
 }

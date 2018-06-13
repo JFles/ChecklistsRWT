@@ -80,8 +80,7 @@ class ListDetailViewController: UITableViewController,
             delegate?.listDetailViewController(self, didFinishEditing: checklistToEdit)
         } else { // if not editing
             // create the object
-            let checklist = Checklist(name: textField.text!)
-            checklist.iconName = iconName
+            let checklist = Checklist(name: textField.text!, iconName: iconName)
             // call delegate method
             delegate?.listDetailViewController(self, didFinishAdding: checklist)
         }
