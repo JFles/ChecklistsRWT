@@ -9,7 +9,7 @@
 import UIKit
 
 class Checklist: NSObject, Codable {
-    init(name: String, iconName: String = "No Icon") {
+    init(name: String, iconName: String = "Folder") {
         self.name = name
         self.iconName = iconName
         super.init()

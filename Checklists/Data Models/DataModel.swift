@@ -45,7 +45,7 @@ class DataModel {
         // if firstTime is true
         if firstTime {
             // create a default list
-            let checklist = Checklist(name: "List")
+            let checklist = Checklist(name: "List", iconName: "Folder")
             lists.append(checklist)
             // add index to save spot if app terminates
             indexOfSelectedChecklist = 0

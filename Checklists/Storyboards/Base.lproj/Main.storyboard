@@ -196,21 +196,29 @@
                                     <rect key="frame" x="0.0" y="0.0" width="307" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="√" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6w-8N-Bjg">
-                                            <rect key="frame" x="11" y="5" width="13" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6w-8N-Bjg">
+                                            <rect key="frame" x="16" y="8.5" width="16" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="16" id="lEF-7q-1P5"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
-                                            <rect key="frame" x="34" y="10" width="184" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
+                                            <rect key="frame" x="42" y="11.5" width="265" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="L6w-8N-Bjg" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="4ez-OK-UOA"/>
+                                        <constraint firstAttribute="trailing" secondItem="CpZ-Gw-Y9V" secondAttribute="trailing" id="5q5-Cb-wMX"/>
+                                        <constraint firstItem="CpZ-Gw-Y9V" firstAttribute="leading" secondItem="L6w-8N-Bjg" secondAttribute="trailing" constant="10" id="gXZ-J1-EDI"/>
+                                        <constraint firstItem="CpZ-Gw-Y9V" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="gfw-uu-Vuy"/>
+                                        <constraint firstItem="L6w-8N-Bjg" firstAttribute="leading" secondItem="GRR-mC-Atm" secondAttribute="leading" constant="16" id="rWG-bh-ZMl"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <segue destination="kKz-4m-U8N" kind="show" identifier="EditItem" trigger="accessoryAction" id="o8V-8a-d7K"/>
