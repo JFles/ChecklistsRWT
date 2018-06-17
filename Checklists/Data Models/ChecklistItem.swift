@@ -14,11 +14,15 @@ class ChecklistItem: NSObject, Codable {
     init(text: String, checked: Bool = false) {
         self.text = text
         self.checked = checked
+        itemID = DataModel.nextChecklistItemID()
         super.init()
     }
     
     var text = ""
     var checked = false
+    var dueDate = Date()
+    var shouldRemind = false
+    var itemID: Int
     
     func toggleChecked() {
         checked = !checked

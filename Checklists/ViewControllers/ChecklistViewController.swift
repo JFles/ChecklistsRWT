@@ -9,9 +9,6 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController, ItemDetailViewControllerDelegate {
-    //array of ChecklistItems
-//    var items = [ChecklistItem]() // moving this to the checklist class to tie the data together
-    
     // currently selected checklist (using to set nav title)
     // will be nil until 'prepare(for:sender:)' executes for vc to receive obj -- so must be optional
     var checklist: Checklist!
@@ -49,6 +46,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Table View Delegate Methods
     //returns how many rows to draw in table
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return checklist.items.count
@@ -89,12 +87,14 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     
+    // sets the text for a checklist item
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
         // tag is used here instead of an @IBOutlet since the element is reusable and has multiple instances
         let label = cell.viewWithTag(1000) as! UILabel
         
         //replace each item with text
-        label.text = item.text
+//        label.text = item.text
+        label.text = "\(item.itemID): \(item.text)"
     }
     
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
@@ -109,6 +109,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
     }
     
+    // MARK: - Item Detail View Controller Delegate Methods
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }

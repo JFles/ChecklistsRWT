@@ -19,8 +19,12 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     //outlet variable exposed at the class level
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
+    @IBOutlet weak var shouldRemindSwitch: UISwitch!
+    @IBOutlet weak var dueDateLabel: UILabel!
     
     var itemToEdit: ChecklistItem?
+    
+    var dueDate = Date()
     
     // delegate to allow the add item vc to return the field text to prior screen
     weak var delegate: ItemDetailViewControllerDelegate?
@@ -47,6 +51,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         return nil
     }
     
+    // MARK: - Misc functions
     @IBAction func cancel() {
         delegate?.itemDetailViewControllerDidCancel(self)
         
@@ -67,6 +72,12 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
 //        navigationController?.popViewController(animated: true)
     }
     
+    func updateDueDateLabel() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+    }
+    
+    // MARK: - Text Field Delegate Methods
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let oldText = textField.text!
         let stringRange = Range(range, in: oldText)!

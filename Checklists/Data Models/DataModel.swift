@@ -37,6 +37,16 @@ class DataModel {
         }
     }
     
+    // returns a unique item ID for each checklist item
+    class func nextChecklistItemID() -> Int {
+        // use user defaults to pull a key for the next usable checklist ID, increment it by 1, save that value, then return it for use as a unique identifier for a local notification
+        let userDefaults = UserDefaults.standard
+        let itemID = userDefaults.integer(forKey: "ChecklistItemID")
+        userDefaults.set(itemID + 1, forKey: "ChecklistItemID")
+        userDefaults.synchronize()
+        return itemID
+    }
+    
     func handleFirstTime() {
         // set const for userDef and firstTime val
         let userDefaults = UserDefaults.standard
