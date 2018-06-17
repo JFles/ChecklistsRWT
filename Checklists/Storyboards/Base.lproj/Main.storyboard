@@ -283,7 +283,7 @@
                             </tableViewSection>
                             <tableViewSection id="heM-qT-fg3">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="BUh-Ye-Nld">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="BUh-Ye-Nld">
                                         <rect key="frame" x="0.0" y="115" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BUh-Ye-Nld" id="xEp-d6-Ag5">
@@ -307,7 +307,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="B8M-Z0-lbj" detailTextLabel="uff-xy-HFs" style="IBUITableViewCellStyleValue1" id="4kc-Ap-fXA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="B8M-Z0-lbj" detailTextLabel="uff-xy-HFs" style="IBUITableViewCellStyleValue1" id="4kc-Ap-fXA">
                                         <rect key="frame" x="0.0" y="159" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4kc-Ap-fXA" id="Try-qr-fhp">
@@ -352,6 +352,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePickerCell" destination="Omu-5V-V7k" id="emK-Xo-nxl"/>
                         <outlet property="doneBarButton" destination="veg-Xq-WLP" id="r4m-XX-kfP"/>
                         <outlet property="dueDateLabel" destination="uff-xy-HFs" id="MgT-Kf-dm7"/>
                         <outlet property="shouldRemindSwitch" destination="dpZ-xc-qP5" id="IZO-pO-Gu7"/>
@@ -359,6 +360,28 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rt-Kd-VgS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Omu-5V-V7k">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="217"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Omu-5V-V7k" id="BEK-If-Af3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="216.5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="gs8-4e-4eX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="550894129.50997996">
+                                    <!--2018-06-17 02:08:49 +0000-->
+                                </date>
+                            </datePicker>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="gs8-4e-4eX" secondAttribute="bottom" id="3xH-J9-KIh"/>
+                            <constraint firstAttribute="trailing" secondItem="gs8-4e-4eX" secondAttribute="trailing" id="CzY-Uy-Fvh"/>
+                            <constraint firstItem="gs8-4e-4eX" firstAttribute="leading" secondItem="BEK-If-Af3" secondAttribute="leading" id="YPU-CG-f3x"/>
+                            <constraint firstItem="gs8-4e-4eX" firstAttribute="top" secondItem="BEK-If-Af3" secondAttribute="top" id="cCG-Qp-Fkl"/>
+                        </constraints>
+                    </tableViewCellContentView>
+                </tableViewCell>
             </objects>
             <point key="canvasLocation" x="2413.04347826087" y="0.0"/>
         </scene>

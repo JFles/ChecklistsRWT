@@ -21,10 +21,16 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var shouldRemindSwitch: UISwitch!
     @IBOutlet weak var dueDateLabel: UILabel!
+    @IBOutlet weak var datePickerCell: UITableViewCell!
+    @IBOutlet weak var datePicker: UIDatePicker!
     
     var itemToEdit: ChecklistItem?
     
+    // creates a date obj initialized with current date and time
+    // need an instance variable because label is stored as a string which is harder to read from
     var dueDate = Date()
+    // tracks whether the datePicker should be shown for the reminder section
+    var datePickerVisible = false
     
     // delegate to allow the add item vc to return the field text to prior screen
     weak var delegate: ItemDetailViewControllerDelegate?
@@ -39,7 +45,11 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             textField.text = itemToEdit.text
             // should be able to submit the edited item without change -- better UX
             doneBarButton.isEnabled = true
+            shouldRemindSwitch.isOn = itemToEdit.shouldRemind
+            dueDate = itemToEdit.dueDate
         }
+        // called here to set the due date label with the proper format and with the current time/date
+        updateDueDateLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,8 +57,57 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         textField.becomeFirstResponder()
     }
     
+    //MARK: - TableView Delegate Methods
+    // prevent row highlight on cell select in code
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
+        // make the dateLabel cell selectable
+        if indexPath.row == 1 && indexPath.section == 1 {
+            return indexPath
+        } else {
+            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 1 && indexPath.row == 2 {
+            return datePickerCell
+        } else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1 && datePickerVisible == true {
+            return 3
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        textField.resignFirstResponder()
+        
+        if indexPath.row == 1 && indexPath.section == 1 {
+            showDatePicker()
+        }
+    }
+    
+    // fixes crash with static cell row being hidden on view launch
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        var newIndexPath = indexPath
+        if indexPath.row == 2 && indexPath.section == 1 {
+            newIndexPath = IndexPath(row: 0, section: indexPath.section)
+        }
+        return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 1 && indexPath.section == 2 {
+            return 217
+        } else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
     }
     
     // MARK: - Misc functions
@@ -61,20 +120,29 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func done() {
         if let itemToEdit = itemToEdit {
             itemToEdit.text = textField.text!
+            itemToEdit.shouldRemind = shouldRemindSwitch.isOn
+            itemToEdit.dueDate = dueDate
             delegate?.itemDetailViewController(self, didFinishEditing: itemToEdit)
         } else {
             let item = ChecklistItem(text: textField.text!, checked: false)
+            item.shouldRemind = shouldRemindSwitch.isOn
+            item.dueDate = dueDate
             delegate?.itemDetailViewController(self, didFinishAdding: item)
         }
-        // debug
-//        print("Textfield is currently '\(textField.text!)'")
-//
-//        navigationController?.popViewController(animated: true)
     }
     
     func updateDueDateLabel() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        dueDateLabel.text = dateFormatter.string(from: dueDate)
+    }
+    
+    func showDatePicker() {
+        datePickerVisible = true
+        
+        let indexPathDatePicker = IndexPath(row: 2, section: 1)
+        tableView.insertRows(at: [indexPathDatePicker], with: .fade)
     }
     
     // MARK: - Text Field Delegate Methods
