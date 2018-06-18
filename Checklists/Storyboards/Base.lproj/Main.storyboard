@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -290,9 +291,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remind Me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxq-O8-bfR">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remind Me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxq-O8-bfR">
                                                     <rect key="frame" x="16" y="11" width="86" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -303,6 +303,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="dpZ-xc-qP5" firstAttribute="top" secondItem="xEp-d6-Ag5" secondAttribute="top" constant="6" id="8lW-2M-xRD"/>
+                                                <constraint firstItem="Fxq-O8-bfR" firstAttribute="top" secondItem="xEp-d6-Ag5" secondAttribute="topMargin" id="AYU-m9-Nbo"/>
+                                                <constraint firstItem="Fxq-O8-bfR" firstAttribute="leading" secondItem="xEp-d6-Ag5" secondAttribute="leadingMargin" id="pvU-WO-bsV"/>
                                                 <constraint firstAttribute="trailing" secondItem="dpZ-xc-qP5" secondAttribute="trailing" constant="18" id="tGN-I7-6Cd"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -352,6 +354,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="gs8-4e-4eX" id="TMb-IW-csi"/>
                         <outlet property="datePickerCell" destination="Omu-5V-V7k" id="emK-Xo-nxl"/>
                         <outlet property="doneBarButton" destination="veg-Xq-WLP" id="r4m-XX-kfP"/>
                         <outlet property="dueDateLabel" destination="uff-xy-HFs" id="MgT-Kf-dm7"/>

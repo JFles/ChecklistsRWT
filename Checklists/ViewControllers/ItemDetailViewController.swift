@@ -76,6 +76,22 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    // FIXME: - Need to fix the crash bug -- might have to override multiple tableView Delegate Methods
+    // in order to blend static and dynamic cells
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return false
+//    }
+//
+//    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+//        return false
+//    }
+//
+//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+//        return UITableViewCellEditingStyle.none
+//    }
+    
+    // FIXME: - DEBUG END
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 && datePickerVisible == true {
             return 3
@@ -93,7 +109,6 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    // fixes crash with static cell row being hidden on view launch
     override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
         var newIndexPath = indexPath
         if indexPath.row == 2 && indexPath.section == 1 {
@@ -103,7 +118,7 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 1 && indexPath.section == 2 {
+        if indexPath.row == 2 && indexPath.section == 1 {
             return 217
         } else {
             return super.tableView(tableView, heightForRowAt: indexPath)
