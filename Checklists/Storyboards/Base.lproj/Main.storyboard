@@ -299,6 +299,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dpZ-xc-qP5">
                                                     <rect key="frame" x="308" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="shouldRemindToggled:" destination="kKz-4m-U8N" eventType="valueChanged" id="X9G-BH-qbX"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>

@@ -89,12 +89,15 @@ class AppDelegate: UIResponder,
     }
     
     //MARK: - User Notification Delegate Methods
-    // This method can be handy when debugging -- makes sense!
+    // behavior for when the app is still in the foreground since the app delegate is still the UN delegate
     func userNotificationCenter(
                        _ center: UNUserNotificationCenter,
        willPresent notification: UNNotification,
        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Received local notification \(notification)")
+//        print("Received local notification \(notification)")
+        
+        // displays the alert with the app in the foreground?
+        return completionHandler(UNNotificationPresentationOptions.alert)
     }
     
     // MARK: - Custom Functions

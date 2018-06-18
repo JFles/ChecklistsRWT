@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 // setup to create delegate
 protocol ItemDetailViewControllerDelegate: class {
@@ -125,12 +126,33 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             itemToEdit.text = textField.text!
             itemToEdit.shouldRemind = shouldRemindSwitch.isOn
             itemToEdit.dueDate = dueDate
+            itemToEdit.scheduleNotification()
             delegate?.itemDetailViewController(self, didFinishEditing: itemToEdit)
         } else {
             let item = ChecklistItem(text: textField.text!, checked: false)
             item.shouldRemind = shouldRemindSwitch.isOn
             item.dueDate = dueDate
+            item.scheduleNotification()
             delegate?.itemDetailViewController(self, didFinishAdding: item)
+        }
+    }
+    
+    // listener event for datepicker outlet to update local dueDate variable
+    @IBAction func dateChanged(_ datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDateLabel()
+    }
+    
+    // request permissions for alerts if reminder switch is on
+    @IBAction func shouldRemindToggled(_ switchControl: UISwitch) {
+        tableView.resignFirstResponder()
+        
+        if shouldRemindSwitch.isOn {
+            let navigationCenter = UNUserNotificationCenter.current()
+            navigationCenter.requestAuthorization(options: [.alert, .sound]) {
+                granted, error in
+                // do nothing
+            }
         }
     }
     
@@ -177,12 +199,6 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
             tableView.deleteRows(at: [indexPathDatePickerRow], with: .fade)
             tableView.endUpdates()
         }
-    }
-    
-    // listener event for datepicker outlet to update local dueDate variable
-    @IBAction func dateChanged(_ datePicker: UIDatePicker) {
-        dueDate = datePicker.date
-        updateDueDateLabel()
     }
     
     // MARK: - Text Field Delegate Methods

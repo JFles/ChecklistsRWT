@@ -93,8 +93,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let label = cell.viewWithTag(1000) as! UILabel
         
         //replace each item with text
-//        label.text = item.text
-        label.text = "\(item.itemID): \(item.text)"
+        label.text = item.text
+//        label.text = "\(item.itemID): \(item.text)" // DEBUG
     }
     
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
