@@ -76,22 +76,6 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    // FIXME: - Need to fix the crash bug -- might have to override multiple tableView Delegate Methods
-    // in order to blend static and dynamic cells
-//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return false
-//    }
-//
-//    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-//        return false
-//    }
-//
-//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-//        return UITableViewCellEditingStyle.none
-//    }
-    
-    // FIXME: - DEBUG END
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 && datePickerVisible == true {
             return 3
@@ -105,7 +89,11 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         
         if indexPath.row == 1 && indexPath.section == 1 {
-            showDatePicker()
+            if !datePickerVisible {
+                showDatePicker()
+            } else {
+                hideDatePicker()
+            }
         }
     }
     
@@ -156,8 +144,45 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
     func showDatePicker() {
         datePickerVisible = true
         
+        let indexPathDateRow = IndexPath(row: 1, section: 1)
         let indexPathDatePicker = IndexPath(row: 2, section: 1)
+        
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        // because two operations are occurring at once, have to be wrapped in the begin and end calls so that they are animated at the same time
+        tableView.beginUpdates()
         tableView.insertRows(at: [indexPathDatePicker], with: .fade)
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.endUpdates()
+        
+        // have to set the date based on obj prop for edited items
+        datePicker.setDate(dueDate, animated: false)
+    }
+    
+    func hideDatePicker() {
+        if datePickerVisible {
+            datePickerVisible = false
+            
+            let indexPathDateRow = IndexPath(row: 1, section: 1)
+            let indexPathDatePickerRow = IndexPath(row: 2, section: 1)
+            
+            if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+                dateCell.detailTextLabel!.textColor = UIColor.black
+            }
+            
+            tableView.beginUpdates()
+            tableView.reloadRows(at: [indexPathDateRow], with: .none)
+            tableView.deleteRows(at: [indexPathDatePickerRow], with: .fade)
+            tableView.endUpdates()
+        }
+    }
+    
+    // listener event for datepicker outlet to update local dueDate variable
+    @IBAction func dateChanged(_ datePicker: UIDatePicker) {
+        dueDate = datePicker.date
+        updateDueDateLabel()
     }
     
     // MARK: - Text Field Delegate Methods
@@ -176,5 +201,9 @@ class ItemDetailViewController: UITableViewController, UITextFieldDelegate {
 //            doneBarButton.isEnabled = true
 //        }
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        hideDatePicker()
     }
 }

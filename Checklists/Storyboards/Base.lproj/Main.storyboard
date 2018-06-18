@@ -375,6 +375,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="550894129.50997996">
                                     <!--2018-06-17 02:08:49 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="dateChanged:" destination="kKz-4m-U8N" eventType="valueChanged" id="zIZ-SP-oz4"/>
+                                </connections>
                             </datePicker>
                         </subviews>
                         <constraints>
