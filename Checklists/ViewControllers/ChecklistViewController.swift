@@ -23,6 +23,9 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         // setting the nav controller title to the current checklist's name
         // is this safe? Found nil and crashed without proper segue -- will this never be nil when properly setup?
         title = checklist.name
+        
+        //may be a better place for sorting the checklists
+        checklist.sortChecklistItems()
     }
     
     // utilizing prepare(for:sender:) for the delegate pattern
@@ -37,7 +40,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 controller.itemToEdit = checklist.items[indexPath.row]
             }
-            
         }
     }
 
@@ -146,6 +148,9 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
         
+        checklist.sortChecklistItems()
+        tableView.reloadData()
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -160,6 +165,10 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
                 configureDueDateLabel(for: cell, with: item)
             }
         }
+        
+        checklist.sortChecklistItems()
+        tableView.reloadData()
+        
         navigationController?.popViewController(animated: true)
     }
 }

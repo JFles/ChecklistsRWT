@@ -38,5 +38,14 @@ class Checklist: NSObject, Codable {
         return items.reduce(0) { count, item in count + (!item.checked ? 1 : 0) }
     }
     
-    
+    // dueDate sorting
+    func sortChecklistItems() {
+        // FIXME: - This works, but can it be refactored?
+        items.sort(by: { item1, item2 in return
+            item1.shouldRemind == true && item2.shouldRemind == false &&
+            item1.dueDate.compare(item2.dueDate) == .orderedAscending ||
+            item1.shouldRemind == true && item2.shouldRemind == true &&
+            item1.dueDate.compare(item2.dueDate) == .orderedAscending
+        })
+    }
 }
