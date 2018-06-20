@@ -49,7 +49,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     }
     
     // MARK: - Table View Delegate Methods
-    //returns how many rows to draw in table
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return checklist.items.count
     }
@@ -61,12 +60,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         //reference to each array item
         let item = checklist.items[indexPath.row]
 
-        //sets label text when drawing row to cell
         configureText(for: cell, with: item)
-        //function sets initial accessory state when drawing row to cell
         configureCheckmark(for: cell, with: item)
-        // sets the due date label -- if any
-        configureDueDateLabel(for: cell, with: item)
         
         return cell
     }
@@ -91,32 +86,20 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     
-    // sets the text for a checklist item
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
-        // tag is used here instead of an @IBOutlet since the element is reusable and has multiple instances
-        let label = cell.viewWithTag(1000) as! UILabel
-        
-        //replace each item with text
-        label.text = item.text
-//        label.text = "\(item.itemID): \(item.text)" // DEBUG
-    }
-    
-    func configureDueDateLabel(for cell: UITableViewCell, with item: ChecklistItem) {
-        let contentView = cell.viewWithTag(1003) as UIView?
         let checklistItemLabel = cell.viewWithTag(1000) as! UILabel
         let dueDateLabel = cell.viewWithTag(1002) as! UILabel
-        let dateFormatter = DateFormatter()
         
         if item.shouldRemind {
-            checklistItemLabel.centerYAnchor.constraint(equalTo: (contentView?.centerYAnchor)!, constant: -5).isActive = true
+            let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .short
             dueDateLabel.text = dateFormatter.string(from: item.dueDate)
             dueDateLabel.isHidden = false
         } else {
             dueDateLabel.isHidden = true
-            checklistItemLabel.centerYAnchor.constraint(equalTo: (contentView?.centerYAnchor)!).isActive = true
         }
+        checklistItemLabel.text = item.text
     }
     
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
@@ -130,7 +113,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             label.text = ""
         }
     }
-    
  
     // MARK: - Item Detail View Controller Delegate Methods
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
@@ -162,7 +144,6 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             // consume indexpath to find correct cell to modify
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureText(for: cell, with: item)
-                configureDueDateLabel(for: cell, with: item)
             }
         }
         

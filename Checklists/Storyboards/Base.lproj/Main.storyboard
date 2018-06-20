@@ -198,7 +198,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6w-8N-Bjg">
-                                            <rect key="frame" x="16" y="8.5" width="16" height="27"/>
+                                            <rect key="frame" x="16" y="9" width="16" height="26.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="16" id="lEF-7q-1P5"/>
                                             </constraints>
@@ -206,24 +206,29 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="dueDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27d-QC-SLL">
-                                            <rect key="frame" x="43" y="25" width="265" height="23"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Checklist Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
-                                            <rect key="frame" x="43" y="12" width="265" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FBt-mt-Ulq">
+                                            <rect key="frame" x="37" y="4.5" width="215" height="35"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checklist Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
+                                                    <rect key="frame" x="0.0" y="0.0" width="215" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dueDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27d-QC-SLL">
+                                                    <rect key="frame" x="0.0" y="20.5" width="215" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="L6w-8N-Bjg" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="4ez-OK-UOA"/>
-                                        <constraint firstAttribute="trailing" secondItem="CpZ-Gw-Y9V" secondAttribute="trailing" id="5q5-Cb-wMX"/>
-                                        <constraint firstItem="CpZ-Gw-Y9V" firstAttribute="leading" secondItem="L6w-8N-Bjg" secondAttribute="trailing" constant="10" id="gXZ-J1-EDI"/>
+                                        <constraint firstAttribute="trailing" secondItem="FBt-mt-Ulq" secondAttribute="trailing" id="W4M-Na-z9g"/>
+                                        <constraint firstItem="FBt-mt-Ulq" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="dyB-S4-wEa"/>
+                                        <constraint firstItem="FBt-mt-Ulq" firstAttribute="leading" secondItem="L6w-8N-Bjg" secondAttribute="trailing" constant="5" id="g0k-c7-0Wu"/>
                                         <constraint firstItem="L6w-8N-Bjg" firstAttribute="leading" secondItem="GRR-mC-Atm" secondAttribute="leading" constant="16" id="rWG-bh-ZMl"/>
                                     </constraints>
                                 </tableViewCellContentView>
