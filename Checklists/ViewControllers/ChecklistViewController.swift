@@ -99,22 +99,21 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 //        label.text = "\(item.itemID): \(item.text)" // DEBUG
     }
     
-    // FIXME: - Copied from Item Detail VC. Could this be abstracted to be shared instead of duplicated?
     func configureDueDateLabel(for cell: UITableViewCell, with item: ChecklistItem) {
-        // if should remind is on, then display the due date label
+        let contentView = cell.viewWithTag(1003) as UIView?
         let checklistItemLabel = cell.viewWithTag(1000) as! UILabel
         let dueDateLabel = cell.viewWithTag(1002) as! UILabel
         let dateFormatter = DateFormatter()
         
         if item.shouldRemind {
-            // TODO: - modify this to conditionally alter the center y anchor for the 'checklistitemlabel' with a -5 offset. Remove the offset when the
+            checklistItemLabel.centerYAnchor.constraint(equalTo: (contentView?.centerYAnchor)!, constant: -5).isActive = true
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .short
             dueDateLabel.text = dateFormatter.string(from: item.dueDate)
             dueDateLabel.isHidden = false
         } else {
             dueDateLabel.isHidden = true
-            // TODO: - modify the constraint to center y without offset for 'checklistitemlabel'
+            checklistItemLabel.centerYAnchor.constraint(equalTo: (contentView?.centerYAnchor)!).isActive = true
         }
     }
     
