@@ -12,7 +12,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
     // currently selected checklist (using to set nav title)
     // will be nil until 'prepare(for:sender:)' executes for vc to receive obj -- so must be optional
     var checklist: Checklist!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,6 +63,8 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         configureText(for: cell, with: item)
         //function sets initial accessory state when drawing row to cell
         configureCheckmark(for: cell, with: item)
+        // sets the due date label -- if any
+        configureDueDateLabel(for: cell, with: item)
         
         return cell
     }
@@ -97,6 +99,25 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
 //        label.text = "\(item.itemID): \(item.text)" // DEBUG
     }
     
+    // FIXME: - Copied from Item Detail VC. Could this be abstracted to be shared instead of duplicated?
+    func configureDueDateLabel(for cell: UITableViewCell, with item: ChecklistItem) {
+        // if should remind is on, then display the due date label
+        let checklistItemLabel = cell.viewWithTag(1000) as! UILabel
+        let dueDateLabel = cell.viewWithTag(1002) as! UILabel
+        let dateFormatter = DateFormatter()
+        
+        if item.shouldRemind {
+            // TODO: - modify this to conditionally alter the center y anchor for the 'checklistitemlabel' with a -5 offset. Remove the offset when the
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+            dueDateLabel.text = dateFormatter.string(from: item.dueDate)
+            dueDateLabel.isHidden = false
+        } else {
+            dueDateLabel.isHidden = true
+            // TODO: - modify the constraint to center y without offset for 'checklistitemlabel'
+        }
+    }
+    
     //sets initial state of togglable checkmark when row is drawn to cell -- fixes reused cell bug
     func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
         let label = cell.viewWithTag(1001) as! UILabel
@@ -109,6 +130,7 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         }
     }
     
+ 
     // MARK: - Item Detail View Controller Delegate Methods
     func itemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
@@ -133,9 +155,10 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
         if let index = checklist.items.index(of: item) {
             // convert Int row into IndexPath
             let indexPath = IndexPath(row: index, section: 0)
-            // conmsume indexpath to find correct cell to modify
+            // consume indexpath to find correct cell to modify
             if let cell = tableView.cellForRow(at: indexPath) {
                 configureText(for: cell, with: item)
+                configureDueDateLabel(for: cell, with: item)
             }
         }
         navigationController?.popViewController(animated: true)

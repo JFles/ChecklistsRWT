@@ -206,8 +206,15 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
-                                            <rect key="frame" x="42" y="11.5" width="265" height="21"/>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="dueDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27d-QC-SLL">
+                                            <rect key="frame" x="43" y="25" width="265" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Checklist Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-Gw-Y9V">
+                                            <rect key="frame" x="43" y="12" width="265" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -217,7 +224,6 @@
                                         <constraint firstItem="L6w-8N-Bjg" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="4ez-OK-UOA"/>
                                         <constraint firstAttribute="trailing" secondItem="CpZ-Gw-Y9V" secondAttribute="trailing" id="5q5-Cb-wMX"/>
                                         <constraint firstItem="CpZ-Gw-Y9V" firstAttribute="leading" secondItem="L6w-8N-Bjg" secondAttribute="trailing" constant="10" id="gXZ-J1-EDI"/>
-                                        <constraint firstItem="CpZ-Gw-Y9V" firstAttribute="centerY" secondItem="GRR-mC-Atm" secondAttribute="centerY" id="gfw-uu-Vuy"/>
                                         <constraint firstItem="L6w-8N-Bjg" firstAttribute="leading" secondItem="GRR-mC-Atm" secondAttribute="leading" constant="16" id="rWG-bh-ZMl"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -241,7 +247,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4B-Nu-wlD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1635" y="0.0"/>
+            <point key="canvasLocation" x="1634.4000000000001" y="-0.44977511244377816"/>
         </scene>
         <!--Add Item-->
         <scene sceneID="Kbh-V6-0GO">
