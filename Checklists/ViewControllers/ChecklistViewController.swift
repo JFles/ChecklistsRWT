@@ -96,6 +96,14 @@ class ChecklistViewController: UITableViewController, ItemDetailViewControllerDe
             dateFormatter.timeStyle = .short
             dueDateLabel.text = dateFormatter.string(from: item.dueDate)
             dueDateLabel.isHidden = false
+            
+            // set text color if the alarm has expired
+            let currentDate = Date()
+            if currentDate > item.dueDate {
+                dueDateLabel.textColor = UIColor.red
+            } else {
+                dueDateLabel.textColor = UIColor.black
+            }
         } else {
             dueDateLabel.isHidden = true
         }
